@@ -10,6 +10,7 @@ using static CovidMonitorAspNetCore.Models.PortalGeralApiResponse;
 using static CovidMonitorAspNetCore.Models.DadosEstadoApiResponse;
 using CovidMonitorAspNetCore.Code.JsonDownload;
 using Newtonsoft.Json;
+using CovidMonitorAspNetCore.Code.Ferramentas;
 
 namespace CovidMonitorAspNetCore.Controllers
 {
@@ -30,20 +31,15 @@ namespace CovidMonitorAspNetCore.Controllers
             var jsonPortalEstado = JsonRequest.PortalEstadoRequest();
             var dadosEstadosResult = JsonConvert.DeserializeObject<List<MyArray>>(jsonPortalEstado);
 
-            ViewBag.CasosRecuperados = dadosGeralResult.confirmados.recuperados;
-            ViewBag.CasosEmAcompanhamento = dadosGeralResult.confirmados.acompanhamento;
-            ViewBag.CasosConfirmados = dadosGeralResult.confirmados.total;
-            ViewBag.CasosNovos = dadosGeralResult.confirmados.novos;
+            ViewBag.CasosRecuperados = Ferramentas.FomataNumero(dadosGeralResult.confirmados.recuperados);
+            ViewBag.CasosEmAcompanhamento = Ferramentas.FomataNumero(dadosGeralResult.confirmados.acompanhamento);
+            ViewBag.CasosConfirmados = Ferramentas.FomataNumero(dadosGeralResult.confirmados.total);
+            ViewBag.CasosNovos = Ferramentas.FomataNumero(dadosGeralResult.confirmados.novos.ToString());
 
-            ViewBag.ObitosConfirmados = dadosGeralResult.obitos.total;
-            ViewBag.ObitosNovos = dadosGeralResult.obitos.novos;
+            ViewBag.ObitosConfirmados = Ferramentas.FomataNumero(dadosGeralResult.obitos.total);
+            ViewBag.ObitosNovos = Ferramentas.FomataNumero(dadosGeralResult.obitos.novos.ToString());
 
             ViewBag.DadosEstados = dadosEstadosResult;
-
-
-
-
-
 
             return View();
         }
