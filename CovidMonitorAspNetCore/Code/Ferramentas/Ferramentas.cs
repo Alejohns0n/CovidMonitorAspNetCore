@@ -24,7 +24,7 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
             {
                 if (index == 3)
                 {
-                    numero = "." + numeroArray[posicaoNoArray] + numero;
+                    numero = " " + numeroArray[posicaoNoArray] + numero;
                     index = 1;
                     posicaoNoArray -= 1;
                 }
@@ -36,6 +36,8 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
                 }
 
             }
+            numero = numero.Trim();
+            numero = numero.Replace(" ", ".");
             return numero;
         }
     }

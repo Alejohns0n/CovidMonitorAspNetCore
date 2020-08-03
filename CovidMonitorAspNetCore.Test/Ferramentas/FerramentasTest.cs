@@ -12,11 +12,11 @@ namespace CovidMonitorAspNetCore.Test.Ferramentas
         public void FormatarNumero()
         {
             //Arranje
-            int numero = 745;
+            string numero = "745123";
             //Act
-            var result = CovidMonitorAspNetCore.Code.Ferramentas.Ferramentas.FomataNumero(numero.ToString());
+            var result = CovidMonitorAspNetCore.Code.Ferramentas.Ferramentas.FomataNumero(numero);
             //Assert
-            result.Equals("745");
+            result.Equals("745.123");
         }
     }
 }
