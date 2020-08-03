@@ -5,98 +5,96 @@
 <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 <link rel="stylesheet" href="~/css/HomeIndex.css" />
 
-<div class="container">
-    <div class="about">
-        <b-container>
-            <b-row align-h="center" class="d-flex justify-content-around">
-                <b-col class="d-block mt-3 px-3 py-4 div-center shadow rounded col-11 col-md-4">
-                    <div class="mb-3">
-                        <h6>Casos recuperados</h6>
+<div class="about">
+    <b-container>
+        <b-row align-h="center" class="d-flex justify-content-around">
+            <b-col class="d-block mt-3 px-3 py-4 div-center shadow rounded col-11 col-md-4">
+                <div class="mb-3">
+                    <h6>Casos recuperados</h6>
+                    <h2>
+                        @ViewBag.CasosRecuperados
+                    </h2>
+                </div>
+                <div>
+                    <h6>Casos em acompanhamento</h6>
+                    <h3>
+                        @ViewBag.CasosEmAcompanhamento
+                    </h3>
+                </div>
+            </b-col>
+            <b-col class="d-block mt-3 col-12 col-md-7">
+                <div class="div-center-white mb-3 d-flex justify-content-around shadow rounded p-3">
+                    <div class="d-block">
+                        <h6>CASOS CONFIRMADOS</h6>
                         <h2>
-                            @ViewBag.CasosRecuperados
+                            @ViewBag.CasosConfirmados
                         </h2>
                     </div>
-                    <div>
-                        <h6>Casos em acompanhamento</h6>
+                    <div class="d-block">
+                        <h6>CASOS NOVOS</h6>
                         <h3>
-                            @ViewBag.CasosEmAcompanhamento
+                            @ViewBag.CasosNovos
                         </h3>
                     </div>
-                </b-col>
-                <b-col class="d-block mt-3 col-12 col-md-7">
-                    <div class="div-center-white mb-3 d-flex justify-content-around shadow rounded p-3">
-                        <div class="d-block">
-                            <h6>CASOS CONFIRMADOS</h6>
-                            <h2>
-                                @ViewBag.CasosConfirmados
-                            </h2>
-                        </div>
-                        <div class="d-block">
-                            <h6>CASOS NOVOS</h6>
-                            <h3>
-                                @ViewBag.CasosNovos
-                            </h3>
-                        </div>
+                </div>
+                <div class="div-center-black d-flex justify-content-around shadow rounded p-3">
+                    <div class="d-block">
+                        <h6>ÓBITOS CONFIRMADOS</h6>
+                        <h2>
+                            @ViewBag.ObitosConfirmados
+                        </h2>
                     </div>
-                    <div class="div-center-black d-flex justify-content-around shadow rounded p-3">
-                        <div class="d-block">
-                            <h6>ÓBITOS CONFIRMADOS</h6>
-                            <h2>
-                                @ViewBag.ObitosConfirmados
-                            </h2>
-                        </div>
-                        <div class="d-block">
-                            <h6>ÓBITOS NOVOS</h6>
-                            <h3>
-                                @ViewBag.ObitosNovos
-                            </h3>
-                        </div>
+                    <div class="d-block">
+                        <h6>ÓBITOS NOVOS</h6>
+                        <h3>
+                            @ViewBag.ObitosNovos
+                        </h3>
                     </div>
-                </b-col>
-            </b-row>
-            <box-content />
-            <footer-new />
-        </b-container>
-    </div>
+                </div>
+            </b-col>
+        </b-row>
+        <box-content />
+        <footer-new />
+    </b-container>
+</div>
 
 
-    <div class="home">
-        <table class="table table-hover">
-            <thead>
-                <tr class="mt-5 m-1 pl-3 pr-3">
-                    <th scope="col">
-                        <h6 class="item-uppercase item-bold text-center">estado</h6>
-                    </th>
-                    <th scope="col">
-                        <h6 class="item-uppercase item-bold text-center">casos</h6>
-                    </th>
-                    <th scope="col">
-                        <h6 class="item-uppercase item-bold text-center">óbitos</h6>
-                    </th>
+<div class="home">
+    <table class="table table-hover">
+        <thead>
+            <tr class="mt-5 m-1 pl-3 pr-3">
+                <th scope="col">
+                    <h6 class="item-uppercase item-bold text-center">estado</h6>
+                </th>
+                <th scope="col">
+                    <h6 class="item-uppercase item-bold text-center">casos</h6>
+                </th>
+                <th scope="col">
+                    <h6 class="item-uppercase item-bold text-center">óbitos</h6>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dadoEstado in ViewBag.DadosEstados)
+            {
+                <tr>
+                    <td>
+                        <h6 class="item-uppercase item-bold text-center">
+                            @dadoEstado.nome
+                        </h6>
+                    </td>
+                    <td>
+                        <h6 class="item-uppercase item-bold text-center">
+                            @CovidMonitorAspNetCore.Code.Ferramentas.Ferramentas.FomataNumero(dadoEstado.casosAcumulado)
+                        </h6>
+                    </td>
+                    <td class="largura-30">
+                        <h6 class="item-uppercase item-bold text-center">
+                            @CovidMonitorAspNetCore.Code.Ferramentas.Ferramentas.FomataNumero(dadoEstado.obitosAcumulado)
+                        </h6>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var dadoEstado in ViewBag.DadosEstados)
-                {
-                    <tr>
-                        <td>
-                            <h6 class="item-uppercase item-bold text-center">
-                                @dadoEstado.nome
-                            </h6>
-                        </td>
-                        <td>
-                            <h6 class="item-uppercase item-bold text-center">
-                                @CovidMonitorAspNetCore.Code.Ferramentas.Ferramentas.FomataNumero(dadoEstado.casosAcumulado)
-                            </h6>
-                        </td>
-                        <td class="largura-30">
-                            <h6 class="item-uppercase item-bold text-center">
-                                @CovidMonitorAspNetCore.Code.Ferramentas.Ferramentas.FomataNumero(dadoEstado.obitosAcumulado)
-                            </h6>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            }
+        </tbody>
+    </table>
 </div>
