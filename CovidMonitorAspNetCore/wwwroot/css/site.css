@@ -58,3 +58,15 @@ body {
   margin-bottom: 60px;
 }
 
+.img-width {
+    width: 50px;
+    border-radius: 50%;
+}
+
+.footerPessoa {
+    color: inherit;
+}
+
+.imgLinkedin {
+    width: 15px;
+}
