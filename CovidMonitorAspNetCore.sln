@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidMonitorAspNetCore", "C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes", "Testes", "{DBBE2A0C-ADF4-4201-A710-57EEAC709BAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CovidMonitorAspNetCore.Test", "CovidMonitorAspNetCore.Test\CovidMonitorAspNetCore.Test.csproj", "{CAAA2AC3-2FF9-4E4A-B623-50AEFC3B4312}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidMonitorAspNetCore.Test", "CovidMonitorAspNetCore.Test\CovidMonitorAspNetCore.Test.csproj", "{CAAA2AC3-2FF9-4E4A-B623-50AEFC3B4312}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
