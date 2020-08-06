@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CovidMonitorAspNetCore.Code.Ferramentas;
 using CovidMonitorAspNetCore.Code.JsonDownload;
+using CovidMonitorAspNetCore.Code.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
@@ -17,14 +18,47 @@ namespace CovidMonitorAspNetCore.Controllers
         {
             return View();
         }
-        public IActionResult BuscarCidade(string nomeCidade)
+        public string BuscarCidade(string nomeCidade)
         {
             var dadosCidadeJsonResponse = JsonRequest.PortalCidadeRequest();
-            var dadosCidades = JsonConvert.DeserializeObject<List<DadosCidade>>(dadosCidadeJsonResponse);
+            var dadosCidades = JsonConvert.DeserializeObject<List<DadosCidades>>(dadosCidadeJsonResponse);
 
-            ViewData["nomeCidade"] = nomeCidade;
-            ViewBag.DadosCidades = dadosCidades;
-            return View("Index");
+            foreach (var dados in dadosCidades)
+            {
+                if (dados.nome.ToLower() == nomeCidade.ToLower())
+                {
+                    return dados.nome;
+                }
+            }
+            return "Digite corretamente";
+        }
+        public string BuscarObitos(string nomeCidade)
+        {
+            var dadosCidadeJsonResponse = JsonRequest.PortalCidadeRequest();
+            var dadosCidades = JsonConvert.DeserializeObject<List<DadosCidades>>(dadosCidadeJsonResponse);
+
+            foreach (var dados in dadosCidades)
+            {
+                if (dados.nome.ToLower() == nomeCidade.ToLower())
+                {
+                    return Ferramentas.FomataNumero(dados.obitosAcumulado);
+                }
+            }
+            return "o nome";
+        }
+        public string BuscarCasos(string nomeCidade)
+        {
+            var dadosCidadeJsonResponse = JsonRequest.PortalCidadeRequest();
+            var dadosCidades = JsonConvert.DeserializeObject<List<DadosCidades>>(dadosCidadeJsonResponse);
+
+            foreach (var dados in dadosCidades)
+            {
+                if (dados.nome.ToLower() == nomeCidade.ToLower())
+                {
+                    return Ferramentas.FomataNumero(dados.casosAcumulado);
+                }
+            }
+            return "da cidade!";
         }
     }
 }

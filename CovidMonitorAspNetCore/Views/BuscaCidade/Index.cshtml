@@ -6,7 +6,7 @@
     <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroup-sizing-lg">Cidade:</span>
     </div>
-    <input type="text" class="form-control" id="nmeCidadeInput" aria-describedby="inputGroup-sizing-lg" oninput="MostrarCidade(this.value)" />
+    <input type="text" class="form-control" id="nmeCidadeInput" aria-describedby="inputGroup-sizing-lg" onblur="MostrarCidade(this.value)" />
 </div>
 
 <table class="table table-hover">
@@ -18,39 +18,21 @@
         </tr>
     </thead>
     <tbody>
-
-        @if (ViewBag.DadosCidades != null)
-        {
-            foreach (var dadosCidade in ViewBag.DadosCidades)
-            {
-                string cidadeNome = dadosCidade.nome;
-                cidadeNome = cidadeNome.ToLower();
-                string cidadeNomePesquisa = ViewData["nomeCidade"].ToString();
-                cidadeNomePesquisa = cidadeNomePesquisa.ToLower();
-                if (cidadeNome.Contains(cidadeNomePesquisa))
-                {
-                    <tr>
-                        <td>
-                            <h6>
-                                @cidadeNome
-                            </h6>
-                        </td>
-                        <td>
-                            <h6>
-                                @dadosCidade.casosAcumulado
-                            </h6>
-                        </td>
-                        <td>
-                            <h6>
-                                @dadosCidade.obitosAcumulado
-                            </h6>
-                        </td>
-                    </tr>
-                }
-            }
-        }
+        <tr>
+            <td>
+                <h6 id="cidade">
+                </h6>
+            </td>
+            <td>
+                <h6 id="casos">
+                </h6>
+            </td>
+            <td>
+                <h6 id="obitos">
+                </h6>
+            </td>
+        </tr>
     </tbody>
-
 </table>
 
 <script type="text/javascript" src="@Url.Content("~/js/BuscaCidade.js")"></script>
