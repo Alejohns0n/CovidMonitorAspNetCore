@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using CovidMonitorAspNetCore.Code.Ferramentas;
 using CovidMonitorAspNetCore.Code.JsonDownload;
-using CovidMonitorAspNetCore.Code.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
 using static CovidMonitorAspNetCore.Code.Models.PortalCidadeApiResponse;
 
@@ -25,7 +20,7 @@ namespace CovidMonitorAspNetCore.Controllers
 
             foreach (var dados in dadosCidades)
             {
-                if (dados.nome.ToLower() == nomeCidade.ToLower())
+                if (dados.nome.ToLower() == nomeCidade.ToLower().Trim())
                 {
                     return dados.nome;
                 }
@@ -39,12 +34,12 @@ namespace CovidMonitorAspNetCore.Controllers
 
             foreach (var dados in dadosCidades)
             {
-                if (dados.nome.ToLower() == nomeCidade.ToLower())
+                if (dados.nome.ToLower() == nomeCidade.ToLower().Trim())
                 {
                     return Ferramentas.FomataNumero(dados.obitosAcumulado);
                 }
             }
-            return "o nome";
+            return "da cidade!";
         }
         public string BuscarCasos(string nomeCidade)
         {
@@ -53,12 +48,12 @@ namespace CovidMonitorAspNetCore.Controllers
 
             foreach (var dados in dadosCidades)
             {
-                if (dados.nome.ToLower() == nomeCidade.ToLower())
+                if (dados.nome.ToLower() == nomeCidade.ToLower().Trim())
                 {
                     return Ferramentas.FomataNumero(dados.casosAcumulado);
                 }
             }
-            return "da cidade!";
+            return "o nome";
         }
     }
 }
