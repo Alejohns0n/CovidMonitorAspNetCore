@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace CovidMonitorAspNetCore.Models
+namespace CovidMonitorAspNetCore.Code.Models
 {
     public class DadosEstadoApiResponse
     {

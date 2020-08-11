@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 namespace CovidMonitorAspNetCore.Code.Models
 {
     public class PortalCidadeApiResponse
@@ -16,6 +17,5 @@ namespace CovidMonitorAspNetCore.Code.Models
         {
             public List<DadosCidades> Dados { get; set; }
         }
-
     }
 }

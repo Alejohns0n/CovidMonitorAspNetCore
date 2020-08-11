@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-namespace CovidMonitorAspNetCore.Models
+
+namespace CovidMonitorAspNetCore.Code.Models
 {
     public class PortalGeralApiResponse
     {
