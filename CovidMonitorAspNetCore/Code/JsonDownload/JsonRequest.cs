@@ -7,6 +7,7 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         private static string _portalEstadoUrl = "https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalEstado";
         private static string _portalGeralUrl = "https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeralApi";
         private static string _portalCidadeUrl = "https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalMunicipio";
+        private static string _CepApiUrl = "https://viacep.com.br/ws/";
         public static string PortalGeralRequest()
         {
             var client = new WebClient();
@@ -23,6 +24,12 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         {
             var client = new WebClient();
             return client.DownloadString(_portalCidadeUrl);
+        }
+        
+        public static string CepRequest(string cep)
+        {
+            var client = new WebClient();
+            return client.DownloadString($"{_CepApiUrl}{cep}/json/");
         }
     }
 }

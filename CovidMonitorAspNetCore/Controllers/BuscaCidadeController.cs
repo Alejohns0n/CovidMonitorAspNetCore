@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using CovidMonitorAspNetCore.Code.Ferramentas;
 using CovidMonitorAspNetCore.Code.JsonDownload;
+using CovidMonitorAspNetCore.Code.Models;
+using CovidMonitorAspNetCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using static CovidMonitorAspNetCore.Code.Models.PortalCidadeApiResponse;
@@ -13,47 +17,37 @@ namespace CovidMonitorAspNetCore.Controllers
         {
             return View();
         }
-        public string BuscarCidade(string nomeCidade)
-        {
-            var dadosCidadeJsonResponse = JsonRequest.PortalCidadeRequest();
-            var dadosCidades = JsonConvert.DeserializeObject<List<DadosCidades>>(dadosCidadeJsonResponse);
 
-            foreach (var dados in dadosCidades)
-            {
-                if (dados.nome.ToLower() == nomeCidade.ToLower().Trim())
-                {
-                    return dados.nome;
-                }
-            }
-            return "Digite corretamente";
-        }
-        public string BuscarObitos(string nomeCidade)
+        [HttpPost]
+        public IActionResult Index(BuscaCidadeModel buscaCidadeModel)
         {
-            var dadosCidadeJsonResponse = JsonRequest.PortalCidadeRequest();
-            var dadosCidades = JsonConvert.DeserializeObject<List<DadosCidades>>(dadosCidadeJsonResponse);
+            var jsonCidadesDados = JsonRequest.PortalCidadeRequest();
+            List<PortalCidadeApiResponse> dadosCidade = JsonConvert.DeserializeObject<List<PortalCidadeApiResponse>>(jsonCidadesDados);
 
-            foreach (var dados in dadosCidades)
+            if (!string.IsNullOrEmpty(buscaCidadeModel.Cep))
             {
-                if (dados.nome.ToLower() == nomeCidade.ToLower().Trim())
-                {
-                    return Ferramentas.FomataNumero(dados.obitosAcumulado);
-                }
-            }
-            return "da cidade!";
-        }
-        public string BuscarCasos(string nomeCidade)
-        {
-            var dadosCidadeJsonResponse = JsonRequest.PortalCidadeRequest();
-            var dadosCidades = JsonConvert.DeserializeObject<List<DadosCidades>>(dadosCidadeJsonResponse);
+                var jsonCepDados = JsonRequest.CepRequest(buscaCidadeModel.Cep.Trim().Replace("-",""));
+                DadosCepApiResponse dadosCep = JsonConvert.DeserializeObject<DadosCepApiResponse>(jsonCepDados);
+                var cidade = dadosCidade.Where(x => dadosCep.ibge.Contains(x.cod)).First();
 
-            foreach (var dados in dadosCidades)
-            {
-                if (dados.nome.ToLower() == nomeCidade.ToLower().Trim())
-                {
-                    return Ferramentas.FomataNumero(dados.casosAcumulado);
-                }
+                ViewData["nmeCidade"] = cidade.nome;
+                ViewData["cidadeCasos"] = Ferramentas.FomataNumero(cidade.casosAcumulado);
+                ViewData["cidadeObitos"] = Ferramentas.FomataNumero(cidade.obitosAcumulado);
+
             }
-            return "o nome";
+            else if (!string.IsNullOrEmpty(buscaCidadeModel.NmeCidade))
+            {
+                var cidade = dadosCidade.Where(x => x.nome.ToLower().Trim() == buscaCidadeModel.NmeCidade.ToLower().Trim()).First();
+                ViewData["nmeCidade"] = cidade.nome;
+                ViewData["cidadeCasos"] = Ferramentas.FomataNumero(cidade.casosAcumulado);
+                ViewData["cidadeObitos"] = Ferramentas.FomataNumero(cidade.obitosAcumulado);
+            }
+            else
+            {
+                return Content("Preencha os campos corretamente!");
+            }
+
+            return View();
         }
     }
 }

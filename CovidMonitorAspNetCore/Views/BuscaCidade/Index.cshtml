@@ -1,18 +1,27 @@
 ﻿@{
     ViewData["Title"] = "busca cidade";
 }
+@model CovidMonitorAspNetCore.Models.BuscaCidadeModel
 <br />
 <br />
 
-<div class="input-group input-group-lg">
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-lg">Cidade:</span>
+<form asp-controller="BuscaCidade" asp-action="Index" method="post">
+    <h3>DIGITE SUA CIDADE OU CEP:</h3>
+    <div class="row">
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Cidade" asp-for="NmeCidade"/>
+        </div>
+        <div class="col">
+            <input type="text" class="form-control" placeholder="Cep" asp-for="Cep"/>
+        </div>
     </div>
-    <input type="text" class="form-control" id="nmeCidadeInput" aria-describedby="inputGroup-sizing-lg" onblur="MostrarCidade(this.value)" />
-</div>
+    <div class="row">
+        <button type="submit" class="btn btn-primary">BUSCAR</button>
+    </div>
+</form>
+
 <br />
-<a class="btn btn-outline-primary btn-lg btn-block">BUSCAR</a>
-<br />
+
 <table class="table table-hover">
     <thead>
         <tr>
@@ -25,14 +34,17 @@
         <tr>
             <td>
                 <h6 id="cidade">
+                    @ViewData["nmeCidade"]
                 </h6>
             </td>
             <td>
                 <h6 id="casos">
+                    @ViewData["cidadeCasos"]
                 </h6>
             </td>
             <td>
                 <h6 id="obitos">
+                    @ViewData["cidadeObitos"]
                 </h6>
             </td>
         </tr>
