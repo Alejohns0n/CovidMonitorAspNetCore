@@ -9,47 +9,44 @@
     <h3>DIGITE SUA CIDADE OU CEP:</h3>
     <div class="row">
         <div class="col">
-            <input type="text" class="form-control" placeholder="Cidade" asp-for="NmeCidade"/>
+            <input type="text" class="form-control" placeholder="Cidade" asp-for="NmeCidade" />
         </div>
         <div class="col">
-            <input type="text" class="form-control" placeholder="Cep" asp-for="Cep"/>
+            <input type="text" class="form-control" placeholder="Cep" asp-for="Cep" />
         </div>
     </div>
+    <br />
     <div class="row">
-        <button type="submit" class="btn btn-primary">BUSCAR</button>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">BUSCAR</button>
+        </div>
     </div>
 </form>
 
 <br />
-
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="row">CIDADE</th>
-            <th>CASOS</th>
-            <th>ÓBITOS</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <h6 id="cidade">
-                    @ViewData["nmeCidade"]
-                </h6>
-            </td>
-            <td>
-                <h6 id="casos">
-                    @ViewData["cidadeCasos"]
-                </h6>
-            </td>
-            <td>
-                <h6 id="obitos">
-                    @ViewData["cidadeObitos"]
-                </h6>
-            </td>
-        </tr>
-    </tbody>
-</table>
+@if (ViewData["nmeCidade"] != null)
+{
+    <div class="card-deck">
+        <div class="card">
+            <h5 class="card-header" id="card-header">CIDADE</h5>
+            <div class="card-body">
+                <h6 class="card-text" id="card-text">@ViewData["nmeCidade"]CURITIBA</h6>
+            </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header" id="card-header">CASOS</h5>
+            <div class="card-body">
+                <h6 class="card-text" id="card-text">@ViewData["cidadeCasos"]11111.9999</h6>
+            </div>
+        </div>
+        <div class="card">
+            <h5 class="card-header" id="card-header">ÓBITOS</h5>
+            <div class="card-body">
+                <h6 class="card-text" id="card-text">@ViewData["cidadeObitos"]898</h6>
+            </div>
+        </div>
+    </div>
+}
 
 <script type="text/javascript" src="@Url.Content("~/js/BuscaCidade.js")"></script>
 
@@ -58,5 +55,9 @@
         position: absolute;
         bottom: 0;
         width: 100%;
+    }
+
+    #card-header, #card-text {
+        text-align: center;
     }
 </style>
