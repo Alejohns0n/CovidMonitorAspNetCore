@@ -30,7 +30,7 @@ namespace CovidMonitorAspNetCore.Controllers
                 DadosCepApiResponse dadosCep = JsonConvert.DeserializeObject<DadosCepApiResponse>(jsonCepDados);
                 var cidade = dadosCidade.Where(x => dadosCep.ibge.Contains(x.cod)).First();
 
-                ViewData["nmeCidade"] = cidade.nome;
+                ViewData["nmeCidade"] = $"{cidade.nome}/{dadosCep.uf}";
                 ViewData["cidadeCasos"] = Ferramentas.FomataNumero(cidade.casosAcumulado);
                 ViewData["cidadeObitos"] = Ferramentas.FomataNumero(cidade.obitosAcumulado);
 
@@ -38,7 +38,7 @@ namespace CovidMonitorAspNetCore.Controllers
             else if (!string.IsNullOrEmpty(buscaCidadeModel.NmeCidade))
             {
                 var cidade = dadosCidade.Where(x => x.nome.ToLower().Trim() == buscaCidadeModel.NmeCidade.ToLower().Trim()).First();
-                ViewData["nmeCidade"] = cidade.nome;
+                ViewData["nmeCidade"] = $"{cidade.nome}/{Ferramentas.BuscarUf(cidade)}";
                 ViewData["cidadeCasos"] = Ferramentas.FomataNumero(cidade.casosAcumulado);
                 ViewData["cidadeObitos"] = Ferramentas.FomataNumero(cidade.obitosAcumulado);
             }
