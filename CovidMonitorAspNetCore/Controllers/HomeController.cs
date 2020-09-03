@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using CovidMonitorAspNetCore.Models;
 using static CovidMonitorAspNetCore.Code.Models.PortalGeralApiResponse;
 using static CovidMonitorAspNetCore.Code.Models.DadosEstadoApiResponse;
 using CovidMonitorAspNetCore.Code.JsonDownload;
@@ -39,24 +34,8 @@ namespace CovidMonitorAspNetCore.Controllers
             ViewBag.ObitosConfirmados = Ferramentas.FomataNumero(dadosGeralResult.obitos.total);
             ViewBag.ObitosNovos = Ferramentas.FomataNumero(dadosGeralResult.obitos.novos.ToString());
 
-            ViewBag.DadosEstados = dadosEstadosResult;
+            ViewBag.DadosEstados =  dadosEstadosResult;
 
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public IActionResult BuscaCidade()
-        {
             return View();
         }
     }

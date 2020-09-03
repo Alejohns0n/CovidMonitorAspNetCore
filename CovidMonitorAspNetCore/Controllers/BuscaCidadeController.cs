@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using CovidMonitorAspNetCore.Code.Ferramentas;
 using CovidMonitorAspNetCore.Code.JsonDownload;
 using CovidMonitorAspNetCore.Code.Models;
 using CovidMonitorAspNetCore.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using static CovidMonitorAspNetCore.Code.Models.PortalCidadeApiResponse;
 
 namespace CovidMonitorAspNetCore.Controllers
 {
@@ -28,7 +26,7 @@ namespace CovidMonitorAspNetCore.Controllers
             {
                 var jsonCepDados = JsonRequest.CepRequest(buscaCidadeModel.Cep.Trim().Replace("-",""));
                 DadosCepApiResponse dadosCep = JsonConvert.DeserializeObject<DadosCepApiResponse>(jsonCepDados);
-                var cidade = dadosCidade.Where(x => dadosCep.ibge.Contains(x.cod)).First();
+                PortalCidadeApiResponse cidade = dadosCidade.Where(x => dadosCep.ibge.Contains(x.cod)).First();
 
                 ViewData["nmeCidade"] = $"{cidade.nome}/{dadosCep.uf}";
                 ViewData["cidadeCasos"] = Ferramentas.FomataNumero(cidade.casosAcumulado);

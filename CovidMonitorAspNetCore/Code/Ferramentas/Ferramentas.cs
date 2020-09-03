@@ -1,17 +1,19 @@
 ﻿using CovidMonitorAspNetCore.Code.JsonDownload;
 using CovidMonitorAspNetCore.Code.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Security.Cryptography.X509Certificates;
 
 namespace CovidMonitorAspNetCore.Code.Ferramentas
 {
     public static class Ferramentas
     {
+        ///<summary>
+        ///Adiciona ponto flutuante em numeros inteiros.
+        ///</summary>
+        ///<returns>
+        ///Uma string com o número formatado.
+        /// </returns>
         public static string FomataNumero(string numero)
         {
             byte index = 1;
@@ -41,8 +43,7 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
                 }
 
             }
-            numero = numero.Trim();
-            numero = numero.Replace(" ", ".");
+            numero = numero.Trim().Replace(" ", ".");
             return numero;
         }
 
@@ -51,16 +52,27 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
             string municipiosJson = JsonRequest.MunicipioServicoDados();
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
 
-            var dadosMunicipio = listaMunicipioServico.Where(x => x.id == cepDados.ibge).First(); ;
-            return dadosMunicipio.microrregiao.mesorregiao.UF.sigla;
+            var dadosMunicipio = listaMunicipioServico.Where(x => x.id == cepDados.ibge).First(); 
+            if (string.IsNullOrEmpty(dadosMunicipio.microrregiao.mesorregiao.UF.sigla))
+                return "";
+            else
+                return dadosMunicipio.microrregiao.mesorregiao.UF.sigla;
         }
+        /// <summary>
+        /// Busca o UF da cidade.
+        /// </summary>
+        /// <param name="portalCidadeApi"></param>
+        /// <returns></returns>
         public static string BuscarUf(PortalCidadeApiResponse portalCidadeApi)
         {
             string municipiosJson = JsonRequest.MunicipioServicoDados();
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
 
             var dadosMunicipio = listaMunicipioServico.Where(x => x.nome.ToLower().Trim() == portalCidadeApi.nome.ToLower().Trim()).First();
-            return dadosMunicipio.microrregiao.mesorregiao.UF.sigla;
+            if (string.IsNullOrEmpty(dadosMunicipio.microrregiao.mesorregiao.UF.sigla))
+                return "";
+            else
+                return dadosMunicipio.microrregiao.mesorregiao.UF.sigla;
         }
     }
 }
