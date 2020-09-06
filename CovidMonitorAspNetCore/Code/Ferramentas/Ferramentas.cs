@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 
 namespace CovidMonitorAspNetCore.Code.Ferramentas
 {
+    /// <summary>
+    /// Classe com ferramentas utilitarias.
+    /// </summary>
     public static class Ferramentas
     {
         ///<summary>

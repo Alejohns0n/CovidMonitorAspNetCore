@@ -12,7 +12,7 @@
             <input type="text" class="form-control" placeholder="Cidade" asp-for="NmeCidade" />
         </div>
         <div class="col">
-            <input type="text" class="form-control" placeholder="Cep" asp-for="Cep" />
+            <input type="text" maxlength="8" id="cep" class="form-control" placeholder="Cep" asp-for="Cep" />
         </div>
     </div>
     <br />
@@ -24,31 +24,44 @@
 </form>
 
 <br />
-@if (ViewData["nmeCidade"] != null)
+@if (ViewData["nmeCidade"] != null || ViewData["error"] != null)
 {
-    <div class="card-deck">
-        <div class="card">
-            <h5 class="card-header" id="card-header">CIDADE</h5>
-            <div class="card-body">
-                <h6 class="card-text" id="card-text">@ViewData["nmeCidade"]</h6>
+    if (ViewData["error"] != null)
+    {
+        <h2 class="text-danger text-center">@ViewData["error"]</h2>
+        <img src="https://www.valuehost.com.br/blog/wp-content/uploads/2019/02/274034-erro-de-http-wordpress-como-corrigir-1170x508.jpg" class="img-fluid" />
+    }
+    else
+    {
+        <div class="card-deck">
+            <div class="card">
+                <h5 class="card-header" id="card-header">CIDADE</h5>
+                <div class="card-body">
+                    <h6 class="card-text" id="card-text">@ViewData["nmeCidade"]</h6>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header" id="card-header">CASOS</h5>
+                <div class="card-body">
+                    <h6 class="card-text" id="card-text">@ViewData["cidadeCasos"]</h6>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header" id="card-header">ÓBITOS</h5>
+                <div class="card-body">
+                    <h6 class="card-text" id="card-text">@ViewData["cidadeObitos"]</h6>
+                </div>
             </div>
         </div>
-        <div class="card">
-            <h5 class="card-header" id="card-header">CASOS</h5>
-            <div class="card-body">
-                <h6 class="card-text" id="card-text">@ViewData["cidadeCasos"]</h6>
-            </div>
-        </div>
-        <div class="card">
-            <h5 class="card-header" id="card-header">ÓBITOS</h5>
-            <div class="card-body">
-                <h6 class="card-text" id="card-text">@ViewData["cidadeObitos"]</h6>
-            </div>
-        </div>
-    </div>
+
+    }
 }
 
 <script type="text/javascript" src="@Url.Content("~/js/BuscaCidade.js")"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+
 
 <style>
     footer {

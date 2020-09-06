@@ -41,4 +41,5 @@ function PegarCasos(nmeCidadeDigitado) {
     buscarCidade.done(function (retorno) {
         document.getElementById("casos").innerHTML = retorno;
     });
+
 }

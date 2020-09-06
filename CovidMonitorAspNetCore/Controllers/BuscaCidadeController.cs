@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using CovidMonitorAspNetCore.Code.Ferramentas;
 using CovidMonitorAspNetCore.Code.JsonDownload;
 using CovidMonitorAspNetCore.Code.Models;
@@ -24,7 +25,17 @@ namespace CovidMonitorAspNetCore.Controllers
 
             if (!string.IsNullOrEmpty(buscaCidadeModel.Cep))
             {
-                var jsonCepDados = JsonRequest.CepRequest(buscaCidadeModel.Cep.Trim().Replace("-",""));
+                if (Regex.IsMatch(buscaCidadeModel.Cep, @"[aA-zA]"))
+                {
+                    ViewData["error"] = "Caracteres inválidos no CEP!";
+                    return View();
+                }
+                var jsonCepDados = JsonRequest.CepRequest(buscaCidadeModel.Cep.Trim().Replace("-", ""));
+                if (jsonCepDados.Contains("erro"))
+                {
+                    ViewData["error"] = "Cep não encontrado";
+                    return View();
+                }
                 DadosCepApiResponse dadosCep = JsonConvert.DeserializeObject<DadosCepApiResponse>(jsonCepDados);
                 PortalCidadeApiResponse cidade = dadosCidade.Where(x => dadosCep.ibge.Contains(x.cod)).First();
 
@@ -35,14 +46,21 @@ namespace CovidMonitorAspNetCore.Controllers
             }
             else if (!string.IsNullOrEmpty(buscaCidadeModel.NmeCidade))
             {
-                var cidade = dadosCidade.Where(x => x.nome.ToLower().Trim() == buscaCidadeModel.NmeCidade.ToLower().Trim()).First();
+                //recebe os dados do primeiro elemento, só pra parar de chorar la em baixo. Não é uma boa prática mais foi oq eu encontrei.
+                PortalCidadeApiResponse cidade = dadosCidade.First();
+                try
+                {
+                    cidade = dadosCidade.Where(x => x.nome.ToLower().Trim() == buscaCidadeModel.NmeCidade.ToLower().Trim()).First();
+                }
+                catch
+                {
+                    ViewData["error"] = "Cidade não foi encontrada!";
+                    return View();
+                }
+
                 ViewData["nmeCidade"] = $"{cidade.nome}/{Ferramentas.BuscarUf(cidade)}";
                 ViewData["cidadeCasos"] = Ferramentas.FomataNumero(cidade.casosAcumulado);
                 ViewData["cidadeObitos"] = Ferramentas.FomataNumero(cidade.obitosAcumulado);
-            }
-            else
-            {
-                return Content("Preencha os campos corretamente!");
             }
 
             return View();
