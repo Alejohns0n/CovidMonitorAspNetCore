@@ -1,36 +1,4 @@
-﻿function MostrarCidade(nmeCidadeDigitado) {
-    PegarCidade(nmeCidadeDigitado);
-    PegarCasos(nmeCidadeDigitado);
-    PegarObitos(nmeCidadeDigitado);   
-}
-
-function PegarCidade(nmeCidadeDigitado) {
-    var buscarCidade = $.ajax({
-        url: '/BuscaCidade/BuscarCidade',
-        data: {
-            nomeCidade: nmeCidadeDigitado
-        }
-    });
-
-    buscarCidade.done(function (retorno) {
-        document.getElementById("cidade").innerHTML = retorno;
-    });
-}
-
-function PegarObitos(nmeCidadeDigitado) {
-    var buscarCidade = $.ajax({
-        url: '/BuscaCidade/BuscarObitos',
-        data: {
-            nomeCidade: nmeCidadeDigitado
-        }
-    });
-
-    buscarCidade.done(function (retorno) {
-        document.getElementById("obitos").innerHTML = retorno;
-    });
-}
-
-function PegarCasos(nmeCidadeDigitado) {
+﻿function PegarCasos(nmeCidadeDigitado) {
     var buscarCidade = $.ajax({
         url: '/BuscaCidade/BuscarCasos',
         data: {
@@ -42,4 +10,15 @@ function PegarCasos(nmeCidadeDigitado) {
         document.getElementById("casos").innerHTML = retorno;
     });
 
+}
+
+function VerificarCampos(campoPreenchido) {
+
+    if (campoPreenchido == "nmecidade") {
+        document.getElementById('cep').value = ("");
+    }
+
+    if (campoPreenchido =="cep") {
+        document.getElementById('nmecidade').value = ("");
+    }
 }

@@ -9,10 +9,10 @@
     <h3>DIGITE SUA CIDADE OU CEP:</h3>
     <div class="row">
         <div class="col">
-            <input type="text" class="form-control" placeholder="Cidade" asp-for="NmeCidade" />
+            <input type="text" id="nmecidade" class="form-control" placeholder="Cidade" asp-for="NmeCidade" oninput="VerificarCampos('nmecidade')"/>
         </div>
         <div class="col">
-            <input type="text" maxlength="8" id="cep" class="form-control" placeholder="Cep" asp-for="Cep" />
+            <input type="text" id="cep" min="8" maxlength="8" class="form-control" placeholder="Cep" asp-for="Cep" oninput="VerificarCampos('cep')" />
         </div>
     </div>
     <br />
@@ -60,8 +60,6 @@
 <script type="text/javascript" src="@Url.Content("~/js/BuscaCidade.js")"></script>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
-
 
 <style>
     footer {
