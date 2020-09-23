@@ -1,24 +1,29 @@
-﻿function PegarCasos(nmeCidadeDigitado) {
-    var buscarCidade = $.ajax({
-        url: '/BuscaCidade/BuscarCasos',
-        data: {
-            nomeCidade: nmeCidadeDigitado
-        }
-    });
-
-    buscarCidade.done(function (retorno) {
-        document.getElementById("casos").innerHTML = retorno;
-    });
-
-}
-
+﻿
 function VerificarCampos(campoPreenchido) {
 
-    if (campoPreenchido == "nmecidade") {
+    if (campoPreenchido == "cidade") {
         document.getElementById('cep').value = ("");
     }
 
     if (campoPreenchido =="cep") {
         document.getElementById('nmecidade').value = ("");
     }
+}
+
+function SujestCidade() {
+    VerificarCampos("cidade");
+    var nmeCidade = document.getElementById('cidade').value;
+
+    var listaCidades2;
+    var cidadesSujest = $.ajax({
+        url: '/BuscaCidade/ListaSugestoesDeCidades',
+        data: {
+            nmeCidadePesquisa: nmeCidade
+        }
+    }).done(function (listaCidades) {
+        listaCidades2 = listaCidades.split("|||");
+        $("#cidade").autocomplete({
+            source: listaCidades2
+        });
+    });
 }

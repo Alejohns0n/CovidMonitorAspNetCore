@@ -1,8 +1,4 @@
-﻿using CovidMonitorAspNetCore.Code.Ferramentas;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
 namespace CovidMonitorAspNetCore.Test.Ferramentas
 {
@@ -14,9 +10,27 @@ namespace CovidMonitorAspNetCore.Test.Ferramentas
             //Arranje
             string numero = "745123";
             //Act
-            var result = CovidMonitorAspNetCore.Code.Ferramentas.Ferramentas.FomataNumero(numero);
+            var result = Code.Ferramentas.Ferramentas.FomataNumero(numero);
             //Assert
             result.Equals("745.123");
         }
+
+        [Fact]
+        public void TestarXml()
+        {
+            string nmeCidade = "belem";
+
+            var result = Code.JsonDownload.XmlRequest.XmlSugestaoCidades(nmeCidade);
+
+            result.Equals("");
+        }
+        [Fact]
+        public void TestarJsonPortalgeral()
+        {
+            var result = Code.JsonDownload.JsonRequest.PortalCidadeRequest();
+
+            var a = 10;
+        }
+
     }
 }

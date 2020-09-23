@@ -3,6 +3,7 @@ using CovidMonitorAspNetCore.Code.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace CovidMonitorAspNetCore.Code.Ferramentas
 {
@@ -66,16 +67,21 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
         /// </summary>
         /// <param name="portalCidadeApi"></param>
         /// <returns></returns>
-        public static string BuscarUf(PortalCidadeApiResponse portalCidadeApi)
+        public static MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade)
         {
             string municipiosJson = JsonRequest.MunicipioServicoDados();
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
 
-            var dadosMunicipio = listaMunicipioServico.Where(x => x.nome.ToLower().Trim() == portalCidadeApi.nome.ToLower().Trim()).First();
-            if (string.IsNullOrEmpty(dadosMunicipio.microrregiao.mesorregiao.UF.sigla))
-                return "";
-            else
-                return dadosMunicipio.microrregiao.mesorregiao.UF.sigla;
+            Regex regex = new Regex(@"(?<=\/).*");
+            Regex matchCidade = new Regex(@".*(\/)");
+            string uf = regex.Match(nmeCidade).ToString().Trim();
+            string cidade = matchCidade.Match(nmeCidade).ToString().Replace("/", "");
+
+            MunicipiosServicosDadosApiResponse dadosMunicipio = listaMunicipioServico.Where(x => x.nome.ToLower().Trim() == cidade.ToLower().Trim() & uf == x.microrregiao.mesorregiao.UF.sigla).FirstOrDefault();
+
+            return dadosMunicipio ;
+
+            //var a = seIssoForNull ?? recebeIsso;
         }
     }
 }

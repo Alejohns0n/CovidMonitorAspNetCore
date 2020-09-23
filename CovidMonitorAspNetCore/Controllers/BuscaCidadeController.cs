@@ -46,11 +46,12 @@ namespace CovidMonitorAspNetCore.Controllers
             }
             else if (!string.IsNullOrEmpty(buscaCidadeModel.NmeCidade))
             {
-                //recebe os dados do primeiro elemento, só pra parar de chorar la em baixo. Não é uma boa prática mais foi oq eu encontrei.
-                PortalCidadeApiResponse cidade = dadosCidade.First();
+                PortalCidadeApiResponse cidade;
+
+                MunicipiosServicosDadosApiResponse municipiosServicosDadosApi = Ferramentas.BuscarCidadeExata(buscaCidadeModel.NmeCidade);
                 try
                 {
-                    cidade = dadosCidade.Where(x => x.nome.ToLower().Trim() == buscaCidadeModel.NmeCidade.ToLower().Trim()).First();
+                    cidade = dadosCidade.Where(x => municipiosServicosDadosApi.id.Contains(x.cod)).First();
                 }
                 catch
                 {
@@ -58,12 +59,26 @@ namespace CovidMonitorAspNetCore.Controllers
                     return View();
                 }
 
-                ViewData["nmeCidade"] = $"{cidade.nome}/{Ferramentas.BuscarUf(cidade)}";
+                ViewData["nmeCidade"] = $"{buscaCidadeModel.NmeCidade}";
                 ViewData["cidadeCasos"] = Ferramentas.FomataNumero(cidade.casosAcumulado);
                 ViewData["cidadeObitos"] = Ferramentas.FomataNumero(cidade.obitosAcumulado);
             }
 
             return View();
+        }
+
+        public string ListaSugestoesDeCidades(string nmeCidadePesquisa)
+        {
+            string cidade = string.Empty;
+            string xmlCidadesSugestao = XmlRequest.XmlSugestaoCidades(nmeCidadePesquisa);
+            List<CidadeSugestao> listCidadeSujestao = JsonConvert.DeserializeObject<List<CidadeSugestao>>(xmlCidadesSugestao);
+
+            foreach (CidadeSugestao cidadeDados in listCidadeSujestao)
+                cidade = cidade + "|||" + cidadeDados.descricao;
+
+            cidade = cidade.Replace("|||", "  ").Trim();
+            cidade = cidade.Replace("  ", "|||");
+            return cidade;
         }
     }
 }

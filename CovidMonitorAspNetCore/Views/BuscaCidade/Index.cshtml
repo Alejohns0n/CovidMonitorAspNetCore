@@ -4,15 +4,16 @@
 @model CovidMonitorAspNetCore.Models.BuscaCidadeModel
 <br />
 <br />
+<link rel="stylesheet" href="~/css//jquery-ui.css" />
 
 <form asp-controller="BuscaCidade" asp-action="Index" method="post">
     <h3>DIGITE SUA CIDADE OU CEP:</h3>
     <div class="row">
         <div class="col">
-            <input type="text" id="nmecidade" class="form-control" placeholder="Cidade" asp-for="NmeCidade" oninput="VerificarCampos('nmecidade')"/>
+            <input type="text" id="cidade" class="form-control" placeholder="Cidade" asp-for="NmeCidade" oninput="SujestCidade()" />
         </div>
         <div class="col">
-            <input type="text" id="cep" min="8" maxlength="8" class="form-control" placeholder="Cep" asp-for="Cep" oninput="VerificarCampos('cep')" />
+            <input type="text" id="cep" min="8" maxlength="8" class="form-control" placeholder="Cep" asp-for="Cep" autocomplete="off" oninput="VerificarCampos('cep')" />
         </div>
     </div>
     <br />
@@ -58,7 +59,9 @@
 }
 
 <script type="text/javascript" src="@Url.Content("~/js/BuscaCidade.js")"></script>
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-ui/jquery-ui.js"></script>
+
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
