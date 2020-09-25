@@ -63,7 +63,7 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
                 return dadosMunicipio.microrregiao.mesorregiao.UF.sigla;
         }
         /// <summary>
-        /// Busca o UF da cidade.
+        /// Busca a cidade exata que a pessoa esta fazendo a busca.
         /// </summary>
         /// <param name="portalCidadeApi"></param>
         /// <returns></returns>
@@ -77,7 +77,7 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
             string uf = regex.Match(nmeCidade).ToString().Trim();
             string cidade = matchCidade.Match(nmeCidade).ToString().Replace("/", "");
 
-            MunicipiosServicosDadosApiResponse dadosMunicipio = listaMunicipioServico.Where(x => x.nome.ToLower().Trim() == cidade.ToLower().Trim() & uf == x.microrregiao.mesorregiao.UF.sigla).FirstOrDefault();
+            MunicipiosServicosDadosApiResponse dadosMunicipio = listaMunicipioServico.Where(x => x.nome.ToLower().Trim() == cidade.ToLower().Trim() & uf.ToLower().Trim() == x.microrregiao.mesorregiao.UF.sigla.ToLower().Trim()).FirstOrDefault();
 
             return dadosMunicipio ;
 

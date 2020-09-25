@@ -10,7 +10,7 @@
     <h3>DIGITE SUA CIDADE OU CEP:</h3>
     <div class="row">
         <div class="col">
-            <input type="text" id="cidade" class="form-control" placeholder="Cidade" asp-for="NmeCidade" oninput="SujestCidade()" />
+            <input type="text" id="cidade" class="form-control" placeholder="Cidade/Estado (ex: São Paulo/SP)" asp-for="NmeCidade" oninput="SujestCidade(this.value)" />
         </div>
         <div class="col">
             <input type="text" id="cep" min="8" maxlength="8" class="form-control" placeholder="Cep" asp-for="Cep" autocomplete="off" oninput="VerificarCampos('cep')" />
