@@ -59,7 +59,7 @@ namespace CovidMonitorAspNetCore.Controllers
                     return View();
                 }
 
-                ViewData["nmeCidade"] = $"{buscaCidadeModel.NmeCidade}";
+                ViewData["nmeCidade"] = $"{municipiosServicosDadosApi.nome}/{municipiosServicosDadosApi.microrregiao.mesorregiao.UF.sigla}";
                 ViewData["cidadeCasos"] = Ferramentas.FomataNumero(cidade.casosAcumulado);
                 ViewData["cidadeObitos"] = Ferramentas.FomataNumero(cidade.obitosAcumulado);
             }
