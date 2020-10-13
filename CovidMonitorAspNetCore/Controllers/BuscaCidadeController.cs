@@ -51,9 +51,14 @@ namespace CovidMonitorAspNetCore.Controllers
                 MunicipiosServicosDadosApiResponse municipiosServicosDadosApi = Ferramentas.BuscarCidadeExata(buscaCidadeModel.NmeCidade);
                 try
                 {
-                    cidade = dadosCidade.Where(x => municipiosServicosDadosApi.id.Contains(x.cod)).First();
+                    cidade = dadosCidade.Where(x => municipiosServicosDadosApi.id.Contains(x.cod)).FirstOrDefault();
                 }
                 catch
+                {
+                    ViewData["error"] = "Cidade não foi encontrada!";
+                    return View();
+                }
+                if(cidade == null)
                 {
                     ViewData["error"] = "Cidade não foi encontrada!";
                     return View();
@@ -76,7 +81,7 @@ namespace CovidMonitorAspNetCore.Controllers
             foreach (CidadeSugestao cidadeDados in listCidadeSujestao)
                 cidade = cidade + "|||" + cidadeDados.descricao;
 
-            cidade = cidade.Replace("|||", "  ").Trim();
+           cidade = cidade.Replace("|||", "  ").Trim();
             cidade = cidade.Replace("  ", "|||");
             return cidade;
         }

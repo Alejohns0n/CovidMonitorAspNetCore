@@ -4,25 +4,30 @@
 @model CovidMonitorAspNetCore.Models.BuscaCidadeModel
 <br />
 <br />
-<link rel="stylesheet" href="~/css//jquery-ui.css" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="~/css/BuscaCidade.css" />
 
-<form asp-controller="BuscaCidade" asp-action="Index" method="post">
-    <h3>DIGITE SUA CIDADE OU CEP:</h3>
-    <div class="form-row">
-        <div class="col">
-            <input type="text" id="cidade" class="form-control" placeholder="Cidade/Estado (ex: São Paulo/SP)" asp-for="NmeCidade" oninput="SujestCidade(this.value)" />
+<section class="search__home main__search" id="search">
+    <h3 style="text-align:center">DIGITE SUA CIDADE OU CEP:</h3>
+    <form asp-controller="BuscaCidade" asp-action="Index" method="post" class="container">
+        <div class="search_input">
+            <div class="form_container">
+                <input type="text" id="cidade" autocomplete="off" class="form-control" placeholder="Cidade/Estado (ex: São Paulo/SP)" asp-for="NmeCidade" oninput="SujestCidade(this.value)" />
+            </div>
         </div>
-        <div class="col">
-            <input type="text" id="cep" min="8" maxlength="8" class="form-control" placeholder="Cep" asp-for="Cep" autocomplete="off" oninput="VerificarCampos('cep')" />
+        <div class="search_input">
+            <div class="form_container">
+                <input type="text" id="cep" min="8" maxlength="8" class="form-control" placeholder="Cep" asp-for="Cep" autocomplete="off" oninput="VerificarCampos('cep')" />
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col">
-            <button type="submit" class="btn btn-primary">BUSCAR</button>
+        <div class="btnBuscar">
+            <button type="submit" class="btn btn-secondary flex-row align-center"><img width="21" height="21" alt="icone pesquisa" src="https://mailing.bne.com.br/SVG/search_Alpha50.svg" /> BUSCAR</button>
         </div>
-    </div>
-</form>
+        <input runat="server" clientidmode="Static" type="hidden" id="hiddenCityQuery">
+    </form>
+</section>
 
 <br />
 @if (ViewData["nmeCidade"] != null || ViewData["error"] != null)
@@ -57,11 +62,9 @@
 
     }
 }
+<div class="autocomplete-suggestions " style="display: none; left: 120px; top: 242px; width: 443px;"></div>
 
 <script type="text/javascript" src="@Url.Content("~/js/BuscaCidade.js")"></script>
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<script src="~/lib/jquery-ui/jquery-ui.js"></script>
-
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
