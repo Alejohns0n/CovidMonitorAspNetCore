@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="~/css/BuscaCidade.css" />
 
 <form asp-controller="BuscaCidade" asp-action="Index" method="post" class="container">
-
+    <h5>Digite a cidade ou o cep:</h5>
     <div class="row">
         <div class="col-sm">
             <input type="text" id="cidade" autocomplete="off" list="listCidades" class="form-control" placeholder="Cidade/Estado (ex: São Paulo/SP)" asp-for="NmeCidade" />
