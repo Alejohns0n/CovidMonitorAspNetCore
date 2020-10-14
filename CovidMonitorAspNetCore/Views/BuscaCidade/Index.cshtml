@@ -14,7 +14,7 @@
     <form asp-controller="BuscaCidade" asp-action="Index" method="post" class="container">
         <div class="search_input">
             <div class="form_container">
-                <input type="text" id="cidade" autocomplete="off" class="form-control" placeholder="Cidade/Estado (ex: São Paulo/SP)" asp-for="NmeCidade" oninput="SujestCidade(this.value)" />
+                <input type="text" id="cidade" autocomplete="on" class="form-control" placeholder="Cidade/Estado (ex: São Paulo/SP)" asp-for="NmeCidade" oninput="SujestCidade(this.value)" />
             </div>
         </div>
         <div class="search_input">
