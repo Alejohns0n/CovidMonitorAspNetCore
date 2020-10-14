@@ -11,14 +11,14 @@
 
 <form asp-controller="BuscaCidade" asp-action="Index" method="post" class="container">
 
-    <div class="row" style="align-content:center;">
+    <div class="row">
         <div class="col-sm">
             <input type="text" id="cidade" autocomplete="off" list="listCidades" class="form-control" placeholder="Cidade/Estado (ex: São Paulo/SP)" asp-for="NmeCidade" />
         </div>
         <div class="col-sm">
             <input type="text" id="cep" min="8" maxlength="8" class="form-control" placeholder="Cep" asp-for="Cep" autocomplete="off" oninput="VerificarCampos('cep')" />
         </div>
-        <div class="col-sm">
+        <div class="col-sm" style="align-items:centers">
             <button type="submit" class="btn btn-secondary flex-row align-center"><img width="21" height="21" alt="icone pesquisa" src="https://mailing.bne.com.br/SVG/search_Alpha50.svg" /> BUSCAR</button>
         </div>
         <datalist id="listCidades">
