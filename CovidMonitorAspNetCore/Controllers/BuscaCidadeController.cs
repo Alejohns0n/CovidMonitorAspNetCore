@@ -14,6 +14,13 @@ namespace CovidMonitorAspNetCore.Controllers
     {
         public IActionResult Index()
         {
+            List<string> listaCidades = new List<string>();
+            string jsonCidadesBrasil = JsonRequest.MunicipioServicoDados();
+            List<MunicipiosServicosDadosApiResponse> municipiosResponse = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(jsonCidadesBrasil);
+            foreach (var cidade in municipiosResponse)
+                listaCidades.Add($"{cidade.nome}/{cidade.microrregiao.mesorregiao.UF.sigla}");
+
+            ViewBag.ListaCidadesSugestao = listaCidades;
             return View();
         }
 

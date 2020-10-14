@@ -14,8 +14,14 @@
     <form asp-controller="BuscaCidade" asp-action="Index" method="post" class="container">
         <div class="search_input">
             <div class="form_container">
-                <input type="text" id="cidade" autocomplete="on" class="form-control" placeholder="Cidade/Estado (ex: São Paulo/SP)" asp-for="NmeCidade" oninput="SujestCidade(this.value)" />
+                <input type="text" id="cidade" autocomplete="off" list="listCidades" class="form-control" placeholder="Cidade/Estado (ex: São Paulo/SP)" asp-for="NmeCidade" />
             </div>
+            <datalist id="listCidades">
+                @foreach (string item in ViewBag.ListaCidadesSugestao)
+                {
+                    <option value="@item"></option>
+                }
+            </datalist>
         </div>
         <div class="search_input">
             <div class="form_container">
