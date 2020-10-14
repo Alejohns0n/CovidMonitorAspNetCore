@@ -6,7 +6,7 @@ function VerificarCampos(campoPreenchido) {
     }
 
     if (campoPreenchido == "cep") {
-        document.getElementById('nmecidade').value = ("");
+        document.getElementById('cidade').value = ("");
     }
 }
 
