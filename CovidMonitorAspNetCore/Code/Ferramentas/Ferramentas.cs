@@ -11,7 +11,7 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
     /// <summary>
     /// Classe com ferramentas utilitarias.
     /// </summary>
-    public static class Ferramentas
+    public class Ferramentas
     {
         ///<summary>
         ///Adiciona ponto flutuante em numeros inteiros.
@@ -68,32 +68,16 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
         /// </summary>
         /// <param name="portalCidadeApi"></param>
         /// <returns></returns>
-        public static MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade)
+        public static MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade, string uf)
         {
             string municipiosJson = JsonRequest.MunicipioServicoDados();
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
 
-            Regex regex = new Regex(@"(?<=\/).*");
-            Regex matchCidade = new Regex(@".*(\/)");
-            string uf = regex.Match(nmeCidade).ToString().Trim();
-            string cidade = matchCidade.Match(nmeCidade).ToString().Replace("/", "");
-
-            MunicipiosServicosDadosApiResponse dadosMunicipio = listaMunicipioServico.Where(x => x.nome.ToLower().Trim() == cidade.ToLower().Trim() & uf.ToLower().Trim() == x.microrregiao.mesorregiao.UF.sigla.ToLower().Trim()).FirstOrDefault();
+            MunicipiosServicosDadosApiResponse dadosMunicipio = listaMunicipioServico.Where(x => x.nome.ToLower().Trim() == nmeCidade.ToLower().Trim() & uf.ToLower().Trim() == x.microrregiao.mesorregiao.UF.sigla.ToLower().Trim()).FirstOrDefault();
 
             return dadosMunicipio ;
 
             //var a = seIssoForNull ?? recebeIsso;
-        }
-
-        public static async Task<List<string>> ListaSugestaoCidades()
-        {
-            List<string> listaCidades = new List<string>();
-            string jsonCidadesBrasil = JsonRequest.MunicipioServicoDados();
-            List<MunicipiosServicosDadosApiResponse> municipiosResponse = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(jsonCidadesBrasil);
-            foreach (var cidade in municipiosResponse)
-                listaCidades.Add($"{cidade.nome}/{cidade.microrregiao.mesorregiao.UF.sigla}");
-
-            return listaCidades;
         }
     }
 }

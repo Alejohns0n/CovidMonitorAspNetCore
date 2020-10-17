@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using CovidMonitorAspNetCore.Code.Ferramentas;
 using CovidMonitorAspNetCore.Code.JsonDownload;
 using CovidMonitorAspNetCore.Code.Models;
@@ -15,14 +14,12 @@ namespace CovidMonitorAspNetCore.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.ListaCidadesSugestao = Ferramentas.ListaSugestaoCidades().Result;
             return View();
         }
 
         [HttpPost]
         public IActionResult Index(BuscaCidadeModel buscaCidadeModel)
         {
-            Task<List<string>> taskListaCidades = Task.Run(() => Ferramentas.ListaSugestaoCidades());
             var jsonCidadesDados = JsonRequest.PortalCidadeRequest();
             List<PortalCidadeApiResponse> dadosCidade = JsonConvert.DeserializeObject<List<PortalCidadeApiResponse>>(jsonCidadesDados);
 
@@ -30,14 +27,12 @@ namespace CovidMonitorAspNetCore.Controllers
             {
                 if (Regex.IsMatch(buscaCidadeModel.Cep, @"[aA-zA]"))
                 {
-                    ViewBag.ListaCidadesSugestao = taskListaCidades.Result;
                     ViewData["error"] = "Caracteres inválidos no CEP!";
                     return View();
                 }
                 var jsonCepDados = JsonRequest.CepRequest(buscaCidadeModel.Cep.Trim().Replace("-", ""));
                 if (jsonCepDados.Contains("erro"))
                 {
-                    ViewBag.ListaCidadesSugestao = taskListaCidades.Result;
                     ViewData["error"] = "Cep não encontrado";
                     return View();
                 }
@@ -53,20 +48,18 @@ namespace CovidMonitorAspNetCore.Controllers
             {
                 PortalCidadeApiResponse cidade;
 
-                MunicipiosServicosDadosApiResponse municipiosServicosDadosApi = Ferramentas.BuscarCidadeExata(buscaCidadeModel.NmeCidade);
+                MunicipiosServicosDadosApiResponse municipiosServicosDadosApi = Ferramentas.BuscarCidadeExata(buscaCidadeModel.NmeCidade, buscaCidadeModel.UF);
                 try
                 {
                     cidade = dadosCidade.Where(x => municipiosServicosDadosApi.id.Contains(x.cod)).FirstOrDefault();
                 }
                 catch
                 {
-                    ViewBag.ListaCidadesSugestao = taskListaCidades.Result;
                     ViewData["error"] = "Cidade não foi encontrada!";
                     return View();
                 }
                 if(cidade == null)
                 {
-                    ViewBag.ListaCidadesSugestao = taskListaCidades.Result;
                     ViewData["error"] = "Cidade não foi encontrada!";
                     return View();
                 }
@@ -74,23 +67,8 @@ namespace CovidMonitorAspNetCore.Controllers
                 ViewData["cidadeCasos"] = Ferramentas.FomataNumero(cidade.casosAcumulado);
                 ViewData["cidadeObitos"] = Ferramentas.FomataNumero(cidade.obitosAcumulado);
             }
-            ViewBag.ListaCidadesSugestao = taskListaCidades.Result;
 
             return View();
-        }
-
-        public string ListaSugestoesDeCidades(string nmeCidadePesquisa)
-        {
-            string cidade = string.Empty;
-            string xmlCidadesSugestao = XmlRequest.XmlSugestaoCidades(nmeCidadePesquisa);
-            List<CidadeSugestao> listCidadeSujestao = JsonConvert.DeserializeObject<List<CidadeSugestao>>(xmlCidadesSugestao);
-
-            foreach (CidadeSugestao cidadeDados in listCidadeSujestao)
-                cidade = cidade + "|||" + cidadeDados.descricao;
-
-           cidade = cidade.Replace("|||", "  ").Trim();
-            cidade = cidade.Replace("  ", "|||");
-            return cidade;
         }
     }
 }

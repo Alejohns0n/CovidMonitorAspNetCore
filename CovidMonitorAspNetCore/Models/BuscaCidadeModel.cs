@@ -9,6 +9,7 @@ namespace CovidMonitorAspNetCore.Models
     {
         public string NmeCidade { get; set; }
         public string Cep { get; set; }
+        public string UF { get; set; }
 
     }
 }

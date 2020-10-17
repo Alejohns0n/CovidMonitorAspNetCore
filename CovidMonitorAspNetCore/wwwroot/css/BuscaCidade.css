@@ -23,11 +23,6 @@
     justify-content: center;
     align-items: center;
 }
-.container {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 1599px;
-}
 
 @media only screen and (max-width: 830px) #search form .search_input {
     margin-right: 0;
@@ -39,28 +34,9 @@
     width: 33.33%;
 }
 
-.form_container {
-    position: relative;
-}
-
-
 .btn-secondary {
     background-color: #ffd54f;
     color: rgba(0,0,0,.54);
-}
-
-.btn {
-    font-weight: 700;
-    height: calc(2.25rem + 2px);
-    padding: 0 34px 0 24px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: none;
-    text-transform: uppercase;
-    font-size: 14px;
-    white-space: nowrap;
 }
 
 .autocomplete-suggestions {
