@@ -49,6 +49,12 @@ namespace CovidMonitorAspNetCore.Controllers
                 PortalCidadeApiResponse cidade;
 
                 MunicipiosServicosDadosApiResponse municipiosServicosDadosApi = Ferramentas.BuscarCidadeExata(buscaCidadeModel.NmeCidade, buscaCidadeModel.UF);
+                
+                if(municipiosServicosDadosApi == null)
+                {
+                    ViewData["error"] = "Cidade não foi encontrada!";
+                    return View();
+                }
                 try
                 {
                     cidade = dadosCidade.Where(x => municipiosServicosDadosApi.id.Contains(x.cod)).FirstOrDefault();
