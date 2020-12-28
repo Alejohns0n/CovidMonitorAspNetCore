@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using static CovidMonitorAspNetCore.Code.Models.PortalGeralApiResponse;
-using static CovidMonitorAspNetCore.Code.Models.DadosEstadoApiResponse;
 using CovidMonitorAspNetCore.Code.JsonDownload;
 using Newtonsoft.Json;
 using CovidMonitorAspNetCore.Code.Ferramentas;
+using CovidMonitorAspNetCore.Code.Models;
 
 namespace CovidMonitorAspNetCore.Controllers
 {
@@ -21,10 +20,10 @@ namespace CovidMonitorAspNetCore.Controllers
         public IActionResult Index()
         {
             var jsonPortalGeral = JsonRequest.PortalGeralRequest();
-            Root dadosGeralResult = JsonConvert.DeserializeObject<Root>(jsonPortalGeral);
+            var dadosGeralResult = JsonConvert.DeserializeObject<PortalGeralApiResponse>(jsonPortalGeral);
 
             var jsonPortalEstado = JsonRequest.PortalEstadoRequest();
-            var dadosEstadosResult = JsonConvert.DeserializeObject<List<MyArray>>(jsonPortalEstado);
+            var dadosEstadosResult = JsonConvert.DeserializeObject<List<DadosEstadoApiResponse>>(jsonPortalEstado);
 
             ViewBag.CasosRecuperados = Ferramentas.FomataNumero(dadosGeralResult.confirmados.recuperados);
             ViewBag.CasosEmAcompanhamento = Ferramentas.FomataNumero(dadosGeralResult.confirmados.acompanhamento);

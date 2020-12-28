@@ -4,6 +4,11 @@ namespace CovidMonitorAspNetCore.Code.Models
 {
     public class PortalGeralApiResponse
     {
+        public Confirmados confirmados { get; set; }
+        public Obitos obitos { get; set; }
+        public DateTime dt_updated { get; set; }
+        public Planilha planilha { get; set; }
+
         public class Confirmados
         {
             public string total { get; set; }
@@ -44,15 +49,5 @@ namespace CovidMonitorAspNetCore.Code.Models
             public DateTime updatedAt { get; set; }
             public string objectId { get; set; }
         }
-
-        public class Root
-        {
-            public Confirmados confirmados { get; set; }
-            public Obitos obitos { get; set; }
-            public DateTime dt_updated { get; set; }
-            public Planilha planilha { get; set; }
-        }
-
-
     }
 }
