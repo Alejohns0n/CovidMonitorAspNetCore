@@ -19,5 +19,4 @@ Monitoramento do casos de Covid-19 no Brasil com dados do Ministério da Saúde.
 </a> 
 <br />
 <h2>🔎 Para acessar o site basta clicar no link:</h2>
-<p>O site está no ambiente de teste da Azure, por isso a demora no primeiro acesso.</p>
-<a href="https://brasilcovid.azurewebsites.net/"><p>🌎 https://brasilcovid.azurewebsites.net/ </p></a>
+<a href="https://covidbrasil.azurewebsites.net/"><p>🌎 https://covidbrasil.azurewebsites.net/ </p></a>
