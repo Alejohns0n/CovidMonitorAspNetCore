@@ -17,6 +17,3 @@ Monitoramento do casos de Covid-19 no Brasil com dados do Ministério da Saúde.
   <h6>🧑‍ Gianlucca Claudino - Desenvolvedor Front-End que deu sujestões para as telas.</h6>
 </div>
 </a> 
-<br />
-<h2>🔎 Para acessar o site basta clicar no link:</h2>
-<a href="https://covidbrasil.azurewebsites.net/"><p>🌎 https://covidbrasil.azurewebsites.net/ </p></a>
