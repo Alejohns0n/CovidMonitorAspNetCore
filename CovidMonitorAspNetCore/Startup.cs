@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using CovidMonitorAspNetCore.Code.Ferramentas;
+using CovidMonitorAspNetCore.Code.JsonDownload;
+using CovidMonitorAspNetCore.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +22,8 @@ namespace CovidMonitorAspNetCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddTransient<IJsonRequest, JsonRequest>();
+            services.AddTransient<IFerramentas, Ferramentas>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

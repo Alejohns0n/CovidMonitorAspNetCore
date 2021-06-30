@@ -1,37 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using CovidMonitorAspNetCore.Code.Ferramentas;
+using CovidMonitorAspNetCore.Code.Models;
+using CovidMonitorAspNetCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using CovidMonitorAspNetCore.Code.JsonDownload;
 using Newtonsoft.Json;
-using CovidMonitorAspNetCore.Code.Ferramentas;
-using CovidMonitorAspNetCore.Code.Models;
+using System.Collections.Generic;
 
 namespace CovidMonitorAspNetCore.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IJsonRequest _jsonRequest;
+        private IFerramentas _ferramentas;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, IJsonRequest jsonRequest, IFerramentas ferramentas)
         {
             _logger = logger;
+            _jsonRequest = jsonRequest;
+            _ferramentas = ferramentas;
         }
 
         public IActionResult Index()
         {
-            var jsonPortalGeral = JsonRequest.PortalGeralRequest();
+            var jsonPortalGeral = _jsonRequest.PortalGeralRequest();
             var dadosGeralResult = JsonConvert.DeserializeObject<PortalGeralApiResponse>(jsonPortalGeral);
 
-            var jsonPortalEstado = JsonRequest.PortalEstadoRequest();
+            var jsonPortalEstado = _jsonRequest.PortalEstadoRequest();
             var dadosEstadosResult = JsonConvert.DeserializeObject<List<DadosEstadoApiResponse>>(jsonPortalEstado);
 
-            ViewBag.CasosRecuperados = Ferramentas.FomataNumero(dadosGeralResult.confirmados.recuperados);
-            ViewBag.CasosEmAcompanhamento = Ferramentas.FomataNumero(dadosGeralResult.confirmados.acompanhamento);
-            ViewBag.CasosConfirmados = Ferramentas.FomataNumero(dadosGeralResult.confirmados.total);
-            ViewBag.CasosNovos = Ferramentas.FomataNumero(dadosGeralResult.confirmados.novos.ToString());
+            ViewBag.CasosRecuperados = _ferramentas.FomataNumero(dadosGeralResult.confirmados.recuperados);
+            ViewBag.CasosEmAcompanhamento = _ferramentas.FomataNumero(dadosGeralResult.confirmados.acompanhamento);
+            ViewBag.CasosConfirmados = _ferramentas.FomataNumero(dadosGeralResult.confirmados.total);
+            ViewBag.CasosNovos = _ferramentas.FomataNumero(dadosGeralResult.confirmados.novos.ToString());
 
-            ViewBag.ObitosConfirmados = Ferramentas.FomataNumero(dadosGeralResult.obitos.total);
-            ViewBag.ObitosNovos = Ferramentas.FomataNumero(dadosGeralResult.obitos.novos.ToString());
+            ViewBag.ObitosConfirmados = _ferramentas.FomataNumero(dadosGeralResult.obitos.total);
+            ViewBag.ObitosNovos = _ferramentas.FomataNumero(dadosGeralResult.obitos.novos.ToString());
 
             ViewBag.DadosEstados =  dadosEstadosResult;
 

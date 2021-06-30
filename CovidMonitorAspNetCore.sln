@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidMonitorAspNetCore", "C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testes", "Testes", "{DBBE2A0C-ADF4-4201-A710-57EEAC709BAD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CovidMonitorAspNetCore.Test", "CovidMonitorAspNetCore.Test\CovidMonitorAspNetCore.Test.csproj", "{CAAA2AC3-2FF9-4E4A-B623-50AEFC3B4312}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teste", "Teste\Teste.csproj", "{0E95309B-1005-4659-A5D8-DA2DC26CCCB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +19,16 @@ Global
 		{40465C8F-0ED8-4FF4-838D-717979E49A5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40465C8F-0ED8-4FF4-838D-717979E49A5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40465C8F-0ED8-4FF4-838D-717979E49A5B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAAA2AC3-2FF9-4E4A-B623-50AEFC3B4312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAAA2AC3-2FF9-4E4A-B623-50AEFC3B4312}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAAA2AC3-2FF9-4E4A-B623-50AEFC3B4312}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAAA2AC3-2FF9-4E4A-B623-50AEFC3B4312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E95309B-1005-4659-A5D8-DA2DC26CCCB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E95309B-1005-4659-A5D8-DA2DC26CCCB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E95309B-1005-4659-A5D8-DA2DC26CCCB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E95309B-1005-4659-A5D8-DA2DC26CCCB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{CAAA2AC3-2FF9-4E4A-B623-50AEFC3B4312} = {DBBE2A0C-ADF4-4201-A710-57EEAC709BAD}
+		{0E95309B-1005-4659-A5D8-DA2DC26CCCB8} = {DBBE2A0C-ADF4-4201-A710-57EEAC709BAD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B539E118-569E-4219-82AC-5B5D080B6284}

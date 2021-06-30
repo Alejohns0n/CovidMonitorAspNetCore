@@ -5,21 +5,29 @@ using System.Linq;
 using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CovidMonitorAspNetCore.Interfaces;
 
 namespace CovidMonitorAspNetCore.Code.Ferramentas
 {
     /// <summary>
     /// Classe com ferramentas utilitarias.
     /// </summary>
-    public class Ferramentas
+    public class Ferramentas : IFerramentas
     {
+        private IJsonRequest _jsonRequest;
+
+        public Ferramentas(IJsonRequest jsonRequest)
+        {
+            _jsonRequest = jsonRequest;
+        }
+
         ///<summary>
         ///Adiciona ponto flutuante em numeros inteiros.
         ///</summary>
         ///<returns>
         ///Uma string com o número formatado.
         /// </returns>
-        public static string FomataNumero(string numero)
+        public string FomataNumero(string numero)
         {
             byte index = 1;
             char[] numeroArray = numero.ToCharArray();
@@ -52,9 +60,9 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
             return numero;
         }
 
-        public static string BuscaUf(DadosCepApiResponse cepDados)
+        public string BuscaUf(DadosCepApiResponse cepDados)
         {
-            string municipiosJson = JsonRequest.MunicipioServicoDados();
+            string municipiosJson = _jsonRequest.MunicipioServicoDados();
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
 
             var dadosMunicipio = listaMunicipioServico.Where(x => x.id == cepDados.ibge).First(); 
@@ -68,9 +76,9 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
         /// </summary>
         /// <param name="portalCidadeApi"></param>
         /// <returns></returns>
-        public static MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade, string uf)
+        public MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade, string uf)
         {
-            string municipiosJson = JsonRequest.MunicipioServicoDados();
+            string municipiosJson = _jsonRequest.MunicipioServicoDados();
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
 
             MunicipiosServicosDadosApiResponse dadosMunicipio = listaMunicipioServico.Where(x => x.nome.ToLower().Trim() == nmeCidade.ToLower().Trim() & uf.ToLower().Trim() == x.microrregiao.mesorregiao.UF.sigla.ToLower().Trim()).FirstOrDefault();
@@ -79,5 +87,6 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
 
             //var a = seIssoForNull ?? recebeIsso;
         }
+
     }
 }
