@@ -22,6 +22,8 @@ namespace CovidMonitorAspNetCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddMemoryCache();
+
             services.AddTransient<IJsonRequest, JsonRequest>();
             services.AddTransient<IFerramentas, Ferramentas>();
         }

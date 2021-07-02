@@ -30,6 +30,12 @@ namespace CovidMonitorAspNetCore.Controllers
             var jsonPortalEstado = _jsonRequest.PortalEstadoRequest();
             var dadosEstadosResult = JsonConvert.DeserializeObject<List<DadosEstadoApiResponse>>(jsonPortalEstado);
 
+            for (int i = 0; i < dadosEstadosResult.Count; i++)
+            {
+                dadosEstadosResult[i].casosAcumulado = _ferramentas.FomataNumero(dadosEstadosResult[i].casosAcumulado);
+                dadosEstadosResult[i].obitosAcumulado = _ferramentas.FomataNumero(dadosEstadosResult[i].obitosAcumulado);
+            }
+
             ViewBag.CasosRecuperados = _ferramentas.FomataNumero(dadosGeralResult.confirmados.recuperados);
             ViewBag.CasosEmAcompanhamento = _ferramentas.FomataNumero(dadosGeralResult.confirmados.acompanhamento);
             ViewBag.CasosConfirmados = _ferramentas.FomataNumero(dadosGeralResult.confirmados.total);
