@@ -6,6 +6,6 @@ namespace CovidMonitorAspNetCore.Interfaces
     {
         public string FomataNumero(string numero);
         public string BuscaUf(DadosCepApiResponse cepDados);
-        public MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade, string uf);
+        public MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade);
     }
 }

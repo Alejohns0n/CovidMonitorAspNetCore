@@ -76,16 +76,17 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
         /// </summary>
         /// <param name="portalCidadeApi"></param>
         /// <returns></returns>
-        public MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade, string uf)
+        public MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade)
         {
+            
             string municipiosJson = _jsonRequest.MunicipioServicoDados();
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
 
-            MunicipiosServicosDadosApiResponse dadosMunicipio = listaMunicipioServico.Where(x => x.nome.ToLower().Trim() == nmeCidade.ToLower().Trim() & uf.ToLower().Trim() == x.microrregiao.mesorregiao.UF.sigla.ToLower().Trim()).FirstOrDefault();
+            MunicipiosServicosDadosApiResponse dadosMunicipio = listaMunicipioServico.Where(
+                x => x.nome.ToLower().Trim() == nmeCidade.Split().First().ToLower().Trim() &
+                nmeCidade.Split().Last().ToLower().Trim() == x.microrregiao.mesorregiao.UF.sigla.ToLower().Trim()).FirstOrDefault();
 
             return dadosMunicipio ;
-
-            //var a = seIssoForNull ?? recebeIsso;
         }
 
     }

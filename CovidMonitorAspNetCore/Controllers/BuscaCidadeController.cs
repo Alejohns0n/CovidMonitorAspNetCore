@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace CovidMonitorAspNetCore.Controllers
 {
+    [Route("buscacidade")]
     public class BuscaCidadeController : Controller
     {
         private IJsonRequest _jsonRequest;
@@ -19,6 +20,7 @@ namespace CovidMonitorAspNetCore.Controllers
             _jsonRequest = jsonRequest;
             _ferramentas = ferramentas;
         }
+
         public IActionResult Index()
         {
             return View();
@@ -55,7 +57,7 @@ namespace CovidMonitorAspNetCore.Controllers
             {
                 PortalCidadeApiResponse cidade;
 
-                MunicipiosServicosDadosApiResponse municipiosServicosDadosApi = _ferramentas.BuscarCidadeExata(buscaCidadeModel.NmeCidade, buscaCidadeModel.UF);
+                MunicipiosServicosDadosApiResponse municipiosServicosDadosApi = _ferramentas.BuscarCidadeExata(buscaCidadeModel.NmeCidade);
                 
                 if(municipiosServicosDadosApi == null)
                 {

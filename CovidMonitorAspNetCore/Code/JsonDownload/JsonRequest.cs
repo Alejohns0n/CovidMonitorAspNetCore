@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Net;
+using System.Net.Http;
 
 namespace CovidMonitorAspNetCore.Code.JsonDownload
 {
@@ -16,7 +17,7 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         private static string _portalGeralUrl = "https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeralApi";
         private static string _portalCidadeUrl = "https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalMunicipio";
         private static string _CepApiUrl = "https://viacep.com.br/ws/";
-        private static string _MunicipiosServicoDadosUrl = "https://servicodados.ibge.gov.br/api/v1/localidades/municipios";
+        private static string _MunicipiosServicoDadosUrl = "wwwroot/data/jsonminifier.json";
         
         public JsonRequest(IMemoryCache memoryCache)
         {
@@ -100,7 +101,7 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
             else
             {
                 var client = new WebClient();
-                json = client.DownloadString(_MunicipiosServicoDadosUrl);
+                json =  client.DownloadString(_MunicipiosServicoDadosUrl);
                 _memoryCache.Set("municipioServicoDados", json, SetMemoryOptions(1200, 300));
                 return json;
             }

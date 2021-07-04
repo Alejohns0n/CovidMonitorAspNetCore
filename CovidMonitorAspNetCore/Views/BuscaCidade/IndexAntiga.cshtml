@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "busca cidade";
+}
+@model CovidMonitorAspNetCore.Models.BuscaCidadeModel
+<br />
+<br />
+
+<link rel="stylesheet" href="~/css/BuscaCidade.css" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.css" />
+
+<form asp-controller="BuscaCidade" asp-action="Index" method="post" class="container" style="align-content:center">
+    <h5>Digite a cidade e uf ou somente o cep:</h5>
+    <div class="row pb-3">
+        <div class="col-sm col-8">
+            <input type="text" id="cidade" autocomplete="off" class="form-control" placeholder="Cidade (ex: São Paulo)" asp-for="NmeCidade" oninput="VerificarCampos('cidade')" />
+        </div>
+        <div class="col-sm col-4">
+            <select class="form-control" id="listUf" asp-for="UF">
+                <option>UF</option>
+                <option>AC</option>
+                <option>AL</option>
+                <option>AM</option>
+                <option>AP</option>
+                <option>BA</option>
+                <option>CE</option>
+                <option>DF</option>
+                <option>ES</option>
+                <option>GO</option>
+                <option>MA</option>
+                <option>MG</option>
+                <option>MT</option>
+                <option>MS</option>
+                <option>PA</option>
+                <option>PB</option>
+                <option>PE</option>
+                <option>PI</option>
+                <option>PR</option>
+                <option>RJ</option>
+                <option>RN</option>
+                <option>RS</option>
+                <option>RO</option>
+                <option>RR</option>
+                <option>SC</option>
+                <option>SP</option>
+                <option>SE</option>
+                <option>TO</option>
+            </select>
+        </div>
+        <div class="col-sm">
+            <input type="text" id="cep" min="8" maxlength="8" class="form-control" placeholder="Cep" asp-for="Cep" autocomplete="off" oninput="VerificarCampos('cep')" />
+        </div>
+        <div class="col-sm">
+            <button type="submit" class="btn btn-primary"><img width="21" height="21" alt="icone pesquisa" src="https://mailing.bne.com.br/SVG/search_Alpha50.svg" /> BUSCAR</button>
+        </div>
+    </div>
+    <input runat="server" clientidmode="Static" type="hidden" id="hiddenCityQuery">
+</form>
+
+
+<br />
+@if (ViewData["nmeCidade"] != null || ViewData["error"] != null)
+{
+    if (ViewData["error"] != null)
+    {
+        <h2 class="text-danger text-center">@ViewData["error"]</h2>
+        <img src="https://www.valuehost.com.br/blog/wp-content/uploads/2019/02/274034-erro-de-http-wordpress-como-corrigir-1170x508.jpg" class="img-fluid" />
+    }
+    else
+    {
+        <div class="card-deck">
+            <div class="card">
+                <h5 class="card-header" id="card-header">CIDADE</h5>
+                <div class="card-body">
+                    <h6 class="card-text" id="card-text">@ViewData["nmeCidade"]</h6>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header" id="card-header">CASOS</h5>
+                <div class="card-body">
+                    <h6 class="card-text" id="card-text">@ViewData["cidadeCasos"]</h6>
+                </div>
+            </div>
+            <div class="card">
+                <h5 class="card-header" id="card-header">ÓBITOS</h5>
+                <div class="card-body">
+                    <h6 class="card-text" id="card-text">@ViewData["cidadeObitos"]</h6>
+                </div>
+            </div>
+        </div>
+
+    }
+}
+<div class="autocomplete-suggestions " style="display: none; left: 120px; top: 242px; width: 443px;"></div>
+
+<script type="text/javascript" src="@Url.Content("~/js/BuscaCidade.js")"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+
+    #card-header, #card-text {
+        text-align: center;
+    }
+</style>
