@@ -1,5 +1,4 @@
-﻿using CovidMonitorAspNetCore.Code.Ferramentas;
-using CovidMonitorAspNetCore.Code.Models;
+﻿using CovidMonitorAspNetCore.Code.Models;
 using CovidMonitorAspNetCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -44,7 +43,7 @@ namespace CovidMonitorAspNetCore.Controllers
             ViewBag.ObitosConfirmados = _ferramentas.FomataNumero(dadosGeralResult.obitos.total);
             ViewBag.ObitosNovos = _ferramentas.FomataNumero(dadosGeralResult.obitos.novos.ToString());
 
-            ViewBag.DadosEstados =  dadosEstadosResult;
+            ViewBag.DadosEstados = dadosEstadosResult;
 
             return View();
         }

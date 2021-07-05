@@ -1,11 +1,8 @@
-﻿using CovidMonitorAspNetCore.Code.JsonDownload;
-using CovidMonitorAspNetCore.Code.Models;
+﻿using CovidMonitorAspNetCore.Code.Models;
+using CovidMonitorAspNetCore.Interfaces;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using CovidMonitorAspNetCore.Interfaces;
 
 namespace CovidMonitorAspNetCore.Code.Ferramentas
 {
@@ -33,7 +30,7 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
             char[] numeroArray = numero.ToCharArray();
             int posicaoNoArray = numeroArray.Length - 1;
 
-            if (numeroArray.Length <=3)
+            if (numeroArray.Length <= 3)
             {
                 return numero;
             }
@@ -65,7 +62,7 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
             string municipiosJson = _jsonRequest.MunicipioServicoDados();
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
 
-            var dadosMunicipio = listaMunicipioServico.Where(x => x.id == cepDados.ibge).First(); 
+            var dadosMunicipio = listaMunicipioServico.Where(x => x.id == cepDados.ibge).First();
             if (string.IsNullOrEmpty(dadosMunicipio.microrregiao.mesorregiao.UF.sigla))
                 return "";
             else
@@ -78,16 +75,14 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
         /// <returns></returns>
         public MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade)
         {
-            
             string municipiosJson = _jsonRequest.MunicipioServicoDados();
+            string uf = nmeCidade.Split("/").Last().ToLower().Trim();
+            nmeCidade = nmeCidade.Split("/").First().ToLower().Trim();
+
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
-
-            MunicipiosServicosDadosApiResponse dadosMunicipio = listaMunicipioServico.Where(
-                x => x.nome.ToLower().Trim() == nmeCidade.Split().First().ToLower().Trim() &
-                nmeCidade.Split().Last().ToLower().Trim() == x.microrregiao.mesorregiao.UF.sigla.ToLower().Trim()).FirstOrDefault();
-
-            return dadosMunicipio ;
+            return listaMunicipioServico.Where(
+                x => x.nome.ToLower().Trim() == nmeCidade &
+                x.microrregiao.mesorregiao.UF.sigla.ToLower().Trim() == uf).FirstOrDefault();
         }
-
     }
 }

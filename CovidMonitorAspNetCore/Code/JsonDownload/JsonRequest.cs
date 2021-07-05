@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Net;
-using System.Net.Http;
+using System.Text;
 
 namespace CovidMonitorAspNetCore.Code.JsonDownload
 {
@@ -18,7 +18,7 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         private static string _portalCidadeUrl = "https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalMunicipio";
         private static string _CepApiUrl = "https://viacep.com.br/ws/";
         private static string _MunicipiosServicoDadosUrl = "wwwroot/data/jsonminifier.json";
-        
+
         public JsonRequest(IMemoryCache memoryCache)
         {
             _memoryCache = memoryCache;
@@ -62,16 +62,10 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         /// </summary>
         public string PortalCidadeRequest()
         {
-            if (_memoryCache.TryGetValue("portalCidadeRequest", out string json))
-                return json;
-            else
+            using (var client = new WebClient())
             {
-                var client = new WebClient();
-                json = client.DownloadString(_portalCidadeUrl);
-                _memoryCache.Set("portalCidadeRequest", json, SetMemoryOptions(1200, 300));
-                return json;
+                return client.DownloadString(_portalCidadeUrl);
             }
-
         }
 
         /// <summary>
@@ -80,6 +74,7 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         /// <param name="cep"></param>
         public string CepRequest(string cep)
         {
+            //nao esta sendo usado
             if (_memoryCache.TryGetValue(cep, out string json))
                 return json;
             else
@@ -96,21 +91,16 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         /// </summary>
         public string MunicipioServicoDados()
         {
-            if (_memoryCache.TryGetValue("municipioServicoDados", out string json))
-                return json;
-            else
+            using(var client = new WebClient())
             {
-                var client = new WebClient();
-                json =  client.DownloadString(_MunicipiosServicoDadosUrl);
-                _memoryCache.Set("municipioServicoDados", json, SetMemoryOptions(1200, 300));
-                return json;
+                return client.DownloadString(_MunicipiosServicoDadosUrl);
             }
         }
 
 
-        private MemoryCacheEntryOptions SetMemoryOptions( double absoluteExpiration, double slidingExpiration)
+        private MemoryCacheEntryOptions SetMemoryOptions(double absoluteExpiration, double slidingExpiration)
         {
-            return new MemoryCacheEntryOptions 
+            return new MemoryCacheEntryOptions
             {
                 AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(absoluteExpiration),
                 SlidingExpiration = TimeSpan.FromSeconds(slidingExpiration)
