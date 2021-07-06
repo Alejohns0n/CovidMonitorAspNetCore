@@ -17,7 +17,7 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         private static string _portalGeralUrl = "https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalGeralApi";
         private static string _portalCidadeUrl = "https://xx9p7hp1p7.execute-api.us-east-1.amazonaws.com/prod/PortalMunicipio";
         private static string _CepApiUrl = "https://viacep.com.br/ws/";
-        private static string _MunicipiosServicoDadosUrl = "wwwroot/data/jsonminifier.json";
+        private static string _MunicipiosServicoDadosUrl = "wwwroot/data/cidadesibge.json";
 
         public JsonRequest(IMemoryCache memoryCache)
         {
@@ -29,13 +29,13 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         /// </summary>
         public string PortalGeralRequest()
         {
-            if (_memoryCache.TryGetValue("portalGeralRequest", out string json))
-                return json;
+            if (_memoryCache.TryGetValue("portalGeralRequest", out byte[] jsonByte))
+                return Encoding.ASCII.GetString(jsonByte);
             else
             {
                 var client = new WebClient();
-                json = client.DownloadString(_portalGeralUrl);
-                _memoryCache.Set("portalGeralRequest", json, SetMemoryOptions(1200, 300));
+                string json = client.DownloadString(_portalGeralUrl);
+                _memoryCache.Set("portalGeralRequest", Encoding.ASCII.GetBytes(json), SetMemoryOptions(1200, 300));
                 return json;
             }
         }
@@ -45,13 +45,13 @@ namespace CovidMonitorAspNetCore.Code.JsonDownload
         /// </summary>
         public string PortalEstadoRequest()
         {
-            if (_memoryCache.TryGetValue("portalEstadoRequest", out string json))
-                return json;
+            if (_memoryCache.TryGetValue("portalEstadoRequest", out byte[] jsonByte))
+                return Encoding.ASCII.GetString(jsonByte);
             else
             {
                 var client = new WebClient();
-                json = client.DownloadString(_portalEstadoUrl);
-                _memoryCache.Set("portalEstadoRequest", json, SetMemoryOptions(1200, 300));
+                string json = client.DownloadString(_portalEstadoUrl);
+                _memoryCache.Set("portalEstadoRequest", Encoding.ASCII.GetBytes(json), SetMemoryOptions(1200, 300));
                 return json;
             }
 

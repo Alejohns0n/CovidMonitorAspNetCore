@@ -21,6 +21,7 @@ namespace CovidMonitorAspNetCore.Controllers
             _ferramentas = ferramentas;
         }
 
+
         public IActionResult Index()
         {
             return View();
@@ -54,7 +55,7 @@ namespace CovidMonitorAspNetCore.Controllers
                 ViewData["error"] = "Cidade não foi encontrada!";
                 return View();
             }
-            ViewData["nmeCidade"] = $"{municipiosServicosDadosApi.nome}/{municipiosServicosDadosApi.microrregiao.mesorregiao.UF.sigla}";
+            ViewData["nmeCidade"] = $"{municipiosServicosDadosApi.nome} / {municipiosServicosDadosApi.uf}";
             ViewData["cidadeCasos"] = _ferramentas.FomataNumero(cidade.casosAcumulado);
             ViewData["cidadeObitos"] = _ferramentas.FomataNumero(cidade.obitosAcumulado);
 

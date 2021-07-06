@@ -63,10 +63,10 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
             List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
 
             var dadosMunicipio = listaMunicipioServico.Where(x => x.id == cepDados.ibge).First();
-            if (string.IsNullOrEmpty(dadosMunicipio.microrregiao.mesorregiao.UF.sigla))
+            if (string.IsNullOrEmpty(dadosMunicipio.uf))
                 return "";
             else
-                return dadosMunicipio.microrregiao.mesorregiao.UF.sigla;
+                return dadosMunicipio.uf;
         }
         /// <summary>
         /// Busca a cidade exata que a pessoa esta fazendo a busca.
@@ -75,14 +75,13 @@ namespace CovidMonitorAspNetCore.Code.Ferramentas
         /// <returns></returns>
         public MunicipiosServicosDadosApiResponse BuscarCidadeExata(string nmeCidade)
         {
-            string municipiosJson = _jsonRequest.MunicipioServicoDados();
             string uf = nmeCidade.Split("/").Last().ToLower().Trim();
             nmeCidade = nmeCidade.Split("/").First().ToLower().Trim();
 
-            List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(municipiosJson);
+            List<MunicipiosServicosDadosApiResponse> listaMunicipioServico = JsonConvert.DeserializeObject<List<MunicipiosServicosDadosApiResponse>>(_jsonRequest.MunicipioServicoDados());
             return listaMunicipioServico.Where(
                 x => x.nome.ToLower().Trim() == nmeCidade &
-                x.microrregiao.mesorregiao.UF.sigla.ToLower().Trim() == uf).FirstOrDefault();
+                x.uf.ToLower().Trim() == uf).FirstOrDefault();
         }
     }
 }
